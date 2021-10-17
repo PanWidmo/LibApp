@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibApp.Models;
+using LibApp.ViewModels;
 
 namespace LibApp.Controllers
 {
@@ -12,12 +13,20 @@ namespace LibApp.Controllers
         public IActionResult Random()
         {
             var firstBook = new Book() { Name = "Engish dict" };
-            var secondBook = new Book() { Name = "German dict" };
 
-            ViewBag.Book1 = firstBook;
-            ViewData["Book2"] = secondBook;
+            var customers = new List<Customer>
+            {
+                new Customer {Name = "Jan Dzban"},
+                new Customer {Name = "Tomasz Baran"},
+            };
 
-            return View();
+            var viewModel = new RandomBookViewModel
+            {
+                Book = firstBook,
+                Customers = customers,
+            };
+
+            return View(firstBook);
         }
 
         public IActionResult Edit (int bookId)
