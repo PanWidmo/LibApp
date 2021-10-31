@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibApp.Models;
-using LibApp.ViewModels;
+using LibApp.ViewModels; 
 
 namespace LibApp.Controllers
 {
@@ -26,7 +26,7 @@ namespace LibApp.Controllers
                 Customers = customers,
             };
 
-            return View(firstBook);
+            return View(viewModel);
         }
 
         public IActionResult Edit (int bookId)
