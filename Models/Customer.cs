@@ -9,6 +9,9 @@ namespace LibApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool HasNewsletterSubscribed { get;set; }
+        public MembershipType Membership { get; set; }
+        public byte MembershipTypeId { get; set; }
 
     }
 }
