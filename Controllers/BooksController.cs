@@ -4,12 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibApp.Models;
-using LibApp.ViewModels; 
+using LibApp.ViewModels;
+using LibApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibApp.Controllers
 {
     public class BooksController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public BooksController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Random()
         {
             var firstBook = new Book() { Name = "Engish dict" };
@@ -36,7 +45,9 @@ namespace LibApp.Controllers
 
         public IActionResult Index()
         {
-            var books = GetBooks();
+            var books = _context.Books
+                .Include(b => b.Genre)
+                .ToList();
 
             return View(books);
         }
@@ -45,6 +56,20 @@ namespace LibApp.Controllers
         public IActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var book = _context.Books
+                .Include(b => b.Genre)
+                .SingleOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                return Content("Book not found");
+            }
+
+            return View(book);
         }
 
         private IEnumerable<Book> GetBooks()

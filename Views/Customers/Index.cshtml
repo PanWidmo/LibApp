@@ -17,7 +17,8 @@ else
     <table class="table table-hover">
         <thead>
             <tr>
-                <th colspan="2">Customer</th>
+                <th>Customer</th>
+                <th colspan="2">Discount Rate</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@ else
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => customer.Name)</td>
+                        <td>@customer.MembershipType.DiscountRate</td>
                         <td><a asp-action="Details" asp-route-id="@customer.Id">Details</a></td>
                     </tr>
                 }
