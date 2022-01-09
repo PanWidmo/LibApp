@@ -34,14 +34,15 @@ namespace LibApp.Controllers.Api
         public IActionResult GetCustomers()
         {
             var customers = _context.Customers
-                                            .Include(c => c.MembershipType)
-                                            .ToList()
-                                            .Select(_mapper.Map<Customer, CustomerDto>);
+                                    .Include(c => c.MembershipType)
+                                    .ToList()
+                                    .Select(_mapper.Map<Customer, CustomerDto>);
+
             return Ok(customers);
         }
 
         // GET /api/customers/{id}
-        [HttpGet("{id}", Name ="GetCustomer")]
+        [HttpGet("{id}", Name = "GetCustomer")]
         public CustomerDto GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
