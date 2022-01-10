@@ -51,9 +51,8 @@ namespace LibApp.Controllers
                 return NotFound();
             }
 
-            var viewModel = new BookFormModel
+            var viewModel = new BookFormViewModel (book)
             {
-                Book = book,
                 Genres = _context.Genres.ToList()
             };
 
@@ -62,9 +61,11 @@ namespace LibApp.Controllers
 
         public IActionResult New()
         {
-            var viewModel = new BookFormModel
+            var genres = _context.Genres.ToList();
+
+            var viewModel = new BookFormViewModel()
             {
-                Genres = _context.Genres.ToList()
+                Genres = genres
             };
 
             return View("BookForm", viewModel);
