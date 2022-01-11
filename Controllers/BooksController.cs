@@ -28,7 +28,7 @@ namespace LibApp.Controllers
             return View(books);
         }
 
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var book = _context.Books
                 .Include(b => b.Genre)
@@ -91,7 +91,7 @@ namespace LibApp.Controllers
 
             try
             {
-            _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (DbUpdateException e)

@@ -26,9 +26,10 @@ namespace LibApp.ViewModels
         [Display(Name = "Release date")]
         public DateTime? ReleaseDate { get; set; }
 
-        [Required(ErrorMessage = "Please provide number in stock value")]
         [Display(Name = "Number in stock")]
-        public int NumberInStock { get; set; }
+        [Required(ErrorMessage = "Please provide number in stock value")]
+        [Range(1,20)]
+        public int? NumberInStock { get; set; }
 
         public IEnumerable<Genre> Genres { get; set; }
 
