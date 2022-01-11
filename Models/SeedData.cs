@@ -51,8 +51,6 @@ namespace LibApp.Models
                         Name = "Potop",
                         AuthorName = "H. Sienkiewicz",
                         GenreId = 1,
-                        DataAdded = DateTime.Parse("19/02/2001"),
-                        ReleaseDate = DateTime.Parse("06/05/1950"),
                         NumberInStock = 3,
                     },
                     new Book
@@ -60,8 +58,6 @@ namespace LibApp.Models
                         Name = "Nowy wspanialy swiat",
                         AuthorName = "A. Huxley",
                         GenreId = 2,
-                        DataAdded = DateTime.Parse("16/12/2000"),
-                        ReleaseDate = DateTime.Parse("01/06/1962"),
                         NumberInStock = 5,
                     },
                     new Book
@@ -69,8 +65,6 @@ namespace LibApp.Models
                         Name = "Diuna",
                         AuthorName = "F. Herbert",
                         GenreId = 3,
-                        DataAdded = DateTime.Parse("21/11/2003"),
-                        ReleaseDate = DateTime.Parse("05/06/1969"),
                         NumberInStock = 15,
                     }
                     );

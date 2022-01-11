@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace LibApp.Dtos
 {
-    public class CustomerDto
+    public class BookDto
     {
         public int Id { get; set; }
         [StringLength(255)]
         public string Name { get; set; }
-        public bool HasNewsletterSubscribed { get; set; }
-        public MembershipTypeDto MembershipType { get; set; }
-        public byte MembershipTypeId { get; set; }
-        public DateTime? Birthdate { get; set; }
+        public string AuthorName { get; set; }
+        public GenreDto Genre { get; set; }
+        public byte GenreId { get; set; }
+        public int NumberInStock { get; set; }
     }
 }

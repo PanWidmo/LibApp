@@ -93,7 +93,6 @@ namespace LibApp.Controllers
                 customerInDb.HasNewsletterSubscribed = customer.HasNewsletterSubscribed;
             }
 
-
             try
             {
                 _context.SaveChanges();

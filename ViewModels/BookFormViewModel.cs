@@ -22,10 +22,6 @@ namespace LibApp.ViewModels
         [Display(Name = "Genre type")]
         public byte? GenreId { get; set; }
 
-        [Required(ErrorMessage = "Please provide release date")]
-        [Display(Name = "Release date")]
-        public DateTime? ReleaseDate { get; set; }
-
         [Display(Name = "Number in stock")]
         [Required(ErrorMessage = "Please provide number in stock value")]
         [Range(1,20)]
@@ -52,7 +48,6 @@ namespace LibApp.ViewModels
             Name = book.Name;
             AuthorName = book.AuthorName;
             GenreId = book.GenreId;
-            ReleaseDate = book.ReleaseDate;
             NumberInStock = book.NumberInStock;
 
         }

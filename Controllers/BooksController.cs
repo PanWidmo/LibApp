@@ -19,13 +19,9 @@ namespace LibApp.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            var books = _context.Books
-                .Include(b => b.Genre)
-                .ToList();
-
-            return View(books);
+            return View();
         }
 
         public IActionResult Details(int id)
@@ -77,7 +73,6 @@ namespace LibApp.Controllers
         {
             if (book.Id == 0)
             {
-                book.DataAdded = DateTime.Now;
                 _context.Books.Add(book);
             }
             else

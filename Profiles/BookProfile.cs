@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace LibApp.Profiles
 {
-    public class CustomerProfile : Profile
+    public class BookProfile : Profile
     {
-        public CustomerProfile() 
+        public BookProfile()
         {
-            CreateMap<Customer, CustomerDto>();
-            CreateMap<CustomerDto, Customer>();
+            CreateMap<Book, BookDto>();
+            CreateMap<BookDto, Book>();
         }
     }
 }

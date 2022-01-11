@@ -31,7 +31,7 @@ namespace LibApp.ViewModels
         {
             get
             {
-                return Id !=0 ? "Edit Customer" : "New Customer";
+                return Id != 0 ? "Edit Customer" : "New Customer";
             }
         }
 
