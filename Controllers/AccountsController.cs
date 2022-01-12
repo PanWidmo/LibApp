@@ -25,6 +25,13 @@ namespace LibApp.Controllers
             return Ok();
         }
 
+        [HttpPost("login")]
+        public ActionResult Login([FromBody] LoginUserDto loginDto)
+        {
+            string token = _accountService.GenerateJWT(loginDto);
+            return Ok(token);
+        }
+
         private readonly IAccountService _accountService;
     }
 }
