@@ -174,7 +174,7 @@ namespace LibApp.Models
                     },
                     new User
                     {
-                        Email = "user1@user.user",
+                        Email = "user2@user.user",
                         FirstName = "Lucjan",
                         LastName = "Grabina",
                         PasswordHash = "user2",
@@ -182,7 +182,7 @@ namespace LibApp.Models
                     },
                     new User
                     {
-                        Email = "user1@user.user",
+                        Email = "user3@user.user",
                         FirstName = "Mariusz",
                         LastName = "Ziaja",
                         PasswordHash = "user3",
