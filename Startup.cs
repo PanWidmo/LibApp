@@ -1,4 +1,5 @@
 using LibApp.Data;
+using LibApp.Entities;
 using LibApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,8 @@ namespace LibApp
             services.AddControllersWithViews();
 
             services.AddScoped<IAccountService, AccountService>();
+
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

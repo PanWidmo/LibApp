@@ -1,6 +1,7 @@
 ﻿using LibApp.Data;
 using LibApp.Dtos;
 using LibApp.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,23 +16,28 @@ namespace LibApp.Services
 
     public class AccountService : IAccountService
     {
-        public AccountService(ApplicationDbContext context)
+        public AccountService(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
 
         public void RegisterUser(RegisterUserDto registerDto)
         {
-            var user = new User
+            var newUser = new User
             {
                 Email = registerDto.Email,
                 RoleId = registerDto.RoleId
             };
 
-            _context.Users.Add(user);
+            var hashedPassword = _passwordHasher.HashPassword(newUser, registerDto.Password);
+            newUser.PasswordHash = hashedPassword;
+
+            _context.Users.Add(newUser);
             _context.SaveChanges();
         }
 
         private readonly ApplicationDbContext _context;
+        private readonly IPasswordHasher<User> _passwordHasher;
     }
 }

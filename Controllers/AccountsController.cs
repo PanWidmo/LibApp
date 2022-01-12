@@ -25,8 +25,6 @@ namespace LibApp.Controllers
             return Ok();
         }
 
-        //23 minuta
-
         private readonly IAccountService _accountService;
     }
 }
