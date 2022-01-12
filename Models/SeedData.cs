@@ -166,6 +166,7 @@ namespace LibApp.Models
                     context.Users.AddRange(
                     new User
                     {
+                        Email = "user1@user.user",
                         FirstName = "Grzegorz",
                         LastName = "Bąk",
                         PasswordHash = "user1",
@@ -173,6 +174,7 @@ namespace LibApp.Models
                     },
                     new User
                     {
+                        Email = "user1@user.user",
                         FirstName = "Lucjan",
                         LastName = "Grabina",
                         PasswordHash = "user2",
@@ -180,6 +182,7 @@ namespace LibApp.Models
                     },
                     new User
                     {
+                        Email = "user1@user.user",
                         FirstName = "Mariusz",
                         LastName = "Ziaja",
                         PasswordHash = "user3",
