@@ -35,6 +35,7 @@ namespace LibApp.Controllers.Api
         {
             var customers = _context.Customers
                                     .Include(c => c.MembershipType)
+                                    .Include(c => c.RoleType)
                                     .ToList()
                                     .Select(_mapper.Map<Customer, CustomerDto>);
 

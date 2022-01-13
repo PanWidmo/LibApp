@@ -110,6 +110,29 @@ namespace LibApp.Models
                     });
                 }
 
+                if (!context.RoleTypes.Any())
+                {
+                    Console.WriteLine("RoleTypes added to database");
+
+                    context.RoleTypes.AddRange(
+                    new RoleType
+                    {
+                        Id = 1,
+                        Name = "User"
+                    },
+                    new RoleType
+                    {
+                        Id = 2,
+                        Name = "StoreManager"
+                    },
+                    new RoleType
+                    {
+                        Id= 3,
+                        Name = "Admin"
+                    }
+                    );
+                }
+
                 if (!context.Customers.Any())
                 {
                     Console.WriteLine("Customers added to database");
@@ -118,28 +141,37 @@ namespace LibApp.Models
                     new Customer
                     {
                         Name = "Jan Dzban",
+                        Email = "jd@jd.jd",
+                        PasswordHash = "jandzban",
                         HasNewsletterSubscribed = true,
                         MembershipTypeId = 3,
-                        Birthdate = DateTime.Parse("05/05/1995")
-                    },
-                    new Customer
-                    {
-                        Name = "Janusz Tracz",
-                        HasNewsletterSubscribed = false,
-                        MembershipTypeId = 2,
-                        Birthdate = DateTime.Parse("11/11/1998")
+                        Birthdate = DateTime.Parse("05/05/1995"),
+                        RoleTypeId = 1
                     },
                     new Customer
                     {
                         Name = "Wojciech Świrpaleta",
+                        Email = "ws@ws.ws",
+                        PasswordHash = "wojciechswirpaleta",
                         HasNewsletterSubscribed = true,
                         MembershipTypeId = 4,
-                        Birthdate = DateTime.Parse("05/10/2002")
+                        Birthdate = DateTime.Parse("05/10/2002"),
+                        RoleTypeId = 2
+                    },
+                    new Customer
+                    {
+                        Name = "Janusz Tracz",
+                        Email= "jt@jt.jt",
+                        PasswordHash = "janusztracz",
+                        HasNewsletterSubscribed = false,
+                        MembershipTypeId = 2,
+                        Birthdate = DateTime.Parse("11/11/1998"),
+                        RoleTypeId = 3
                     }
                     );
                 }
 
-                if (!context.Roles.Any())
+                /*if (!context.Roles.Any())
                 {
                     Console.WriteLine("Roles added to database");
 
@@ -189,7 +221,7 @@ namespace LibApp.Models
                         RoleId = 1
                     }
                     );
-                }
+                }*/
 
                 context.SaveChanges();
             }
