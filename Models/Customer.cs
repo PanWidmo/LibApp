@@ -18,7 +18,7 @@ namespace LibApp.Models
         public byte MembershipTypeId { get; set; }
         public DateTime? Birthdate { get; set; }
         public RoleType RoleType { get; set; }
-        public byte RoleTypeId { get; set; }
+        public byte RoleTypeId { get; set; } = 1; //defaultowo kazdy bedzie userem
 
     }
 }

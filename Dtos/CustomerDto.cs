@@ -10,7 +10,6 @@ namespace LibApp.Dtos
     public class CustomerDto
     {
         public int Id { get; set; }
-        [StringLength(255)]
         public string Name { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }

@@ -28,6 +28,7 @@ namespace LibApp.Controllers
         {
             var customer = _context.Customers
                 .Include(c => c.MembershipType)
+                .Include(c => c.RoleType)
                 .SingleOrDefault(c => c.Id == id);
 
             if(customer == null)
@@ -41,10 +42,12 @@ namespace LibApp.Controllers
         public IActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
+            var roleTypes = _context.RoleTypes.ToList();
 
             var viewModel = new CustomerFormViewModel()
             {
-                MembershipTypes = membershipTypes
+                MembershipTypes = membershipTypes,
+                RoleTypes = roleTypes
             };
             return View("CustomerForm", viewModel);
         }
@@ -59,7 +62,8 @@ namespace LibApp.Controllers
 
             var viewModel = new CustomerFormViewModel(customer)
             {
-                MembershipTypes = _context.MembershipTypes.ToList()
+                MembershipTypes = _context.MembershipTypes.ToList(),
+                RoleTypes = _context.RoleTypes.ToList()
             };
 
             return View("CustomerForm", viewModel);
@@ -74,7 +78,8 @@ namespace LibApp.Controllers
             {
                 var viewModel = new CustomerFormViewModel(customer)
                 {
-                    MembershipTypes = _context.MembershipTypes.ToList()
+                    MembershipTypes = _context.MembershipTypes.ToList(),
+                    RoleTypes = _context.RoleTypes.ToList()
                 };
 
                 return View("CustomerForm", viewModel);
@@ -88,9 +93,12 @@ namespace LibApp.Controllers
             {
                 var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
                 customerInDb.Name = customer.Name;
+                customerInDb.Email = customer.Email;
+                customerInDb.PasswordHash = customer.PasswordHash;
                 customerInDb.Birthdate = customer.Birthdate;
                 customerInDb.MembershipTypeId = customer.MembershipTypeId;
                 customerInDb.HasNewsletterSubscribed = customer.HasNewsletterSubscribed;
+                customerInDb.RoleTypeId = customer.RoleTypeId;
             }
 
             try

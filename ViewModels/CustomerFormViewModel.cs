@@ -15,6 +15,16 @@ namespace LibApp.ViewModels
         [StringLength(255)]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please provide customer's email")]
+        [StringLength(255)]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Please provide customer's password")]
+        [StringLength(255)]
+        [MinLength(5)]
+        [Display(Name = "Password")]
+        public string PasswordHash { get; set; }
+
         public bool HasNewsletterSubscribed { get; set; }
 
         [Required(ErrorMessage ="Please select Membership Type")]
@@ -24,6 +34,11 @@ namespace LibApp.ViewModels
         [Display(Name = "Date of Birth")]
         [Min18YearsIfMember]
         public DateTime? Birthdate { get; set; }
+
+        [Display(Name = "Role Type")]
+        public byte? RoleTypeId { get; set; }
+
+        public IEnumerable<RoleType> RoleTypes { get; set; }
 
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
 
@@ -44,9 +59,12 @@ namespace LibApp.ViewModels
         {
             Id = customer.Id;
             Name = customer.Name;
+            Email = customer.Email;
+            PasswordHash = customer.PasswordHash;
             MembershipTypeId = customer.MembershipTypeId;
             HasNewsletterSubscribed = customer.HasNewsletterSubscribed;
             Birthdate = customer.Birthdate;
+            RoleTypeId = customer.RoleTypeId;
 
         }
     }
