@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using LibApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using LibApp.Entities;
 
 namespace LibApp.Models
 {
@@ -170,58 +169,6 @@ namespace LibApp.Models
                     }
                     );
                 }
-
-                /*if (!context.Roles.Any())
-                {
-                    Console.WriteLine("Roles added to database");
-
-                    context.Roles.AddRange(
-                    new Role
-                    {
-                        Name = "User",
-                    },
-                    new Role
-                    {
-                        Name = "StoreManager",
-                    },
-                    new Role
-                    {
-                        Name = "Owner",
-                    }
-                    );
-                }
-
-                if (!context.Users.Any())
-                {
-                    Console.WriteLine("Users added to database");
-
-                    context.Users.AddRange(
-                    new User
-                    {
-                        Email = "user1@user.user",
-                        FirstName = "Grzegorz",
-                        LastName = "Bąk",
-                        PasswordHash = "user1",
-                        RoleId = 1
-                    },
-                    new User
-                    {
-                        Email = "user2@user.user",
-                        FirstName = "Lucjan",
-                        LastName = "Grabina",
-                        PasswordHash = "user2",
-                        RoleId = 1
-                    },
-                    new User
-                    {
-                        Email = "user3@user.user",
-                        FirstName = "Mariusz",
-                        LastName = "Ziaja",
-                        PasswordHash = "user3",
-                        RoleId = 1
-                    }
-                    );
-                }*/
 
                 context.SaveChanges();
             }

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using LibApp.Models;
-using LibApp.Entities;
 
 namespace LibApp.Data
 {
@@ -15,8 +14,6 @@ namespace LibApp.Data
         public DbSet<RoleType> RoleTypes { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Genre> Genres { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

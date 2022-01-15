@@ -1,6 +1,6 @@
 ﻿using LibApp.Data;
 using LibApp.Dtos;
-using LibApp.Entities;
+using LibApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.SecurityTokenService;
@@ -23,7 +23,7 @@ namespace LibApp.Services
 
     public class AccountService : IAccountService
     {
-        public AccountService(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, AuthenticationSettings authentication)
+        public AccountService(ApplicationDbContext context, IPasswordHasher<Customer> passwordHasher, AuthenticationSettings authentication)
         {
             _context = context;
             _passwordHasher = passwordHasher;
@@ -32,31 +32,32 @@ namespace LibApp.Services
 
         public void RegisterUser(RegisterUserDto registerDto)
         {
-            var newUser = new User
+            var newCustomer = new Customer
             {
+                Name = registerDto.Name,
                 Email = registerDto.Email,
-                RoleId = registerDto.RoleId
+                RoleTypeId = registerDto.RoleTypeId
             };
 
-            var hashedPassword = _passwordHasher.HashPassword(newUser, registerDto.Password);
-            newUser.PasswordHash = hashedPassword;
+            var hashedPassword = _passwordHasher.HashPassword(newCustomer, registerDto.Password);
+            newCustomer.PasswordHash = hashedPassword;
 
-            _context.Users.Add(newUser);
+            _context.Customers.Add(newCustomer);
             _context.SaveChanges();
         }
 
         public string GenerateJWT(LoginUserDto loginDto)
         {
-            var user = _context.Users
-                .Include(u => u.Role)
+            var customer = _context.Customers
+                .Include(u => u.RoleType)
                 .FirstOrDefault(u => u.Email == loginDto.Email);
 
-            if(user == null)
+            if(customer == null)
             {
                 throw new BadRequestException("Invalid email or password");
             }
 
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
+            var result = _passwordHasher.VerifyHashedPassword(customer, customer.PasswordHash, loginDto.Password);
 
             if(result == PasswordVerificationResult.Failed)
             {
@@ -65,9 +66,9 @@ namespace LibApp.Services
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimTypes.Role, $"{user.Role.Name}"),
+                new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
+                new Claim(ClaimTypes.Name, $"{customer.Name}"),
+                new Claim(ClaimTypes.Role, $"{customer.RoleType.Name}"),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
@@ -87,7 +88,7 @@ namespace LibApp.Services
         }
 
         private readonly ApplicationDbContext _context;
-        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<Customer> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
     }
 }

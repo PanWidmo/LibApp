@@ -15,7 +15,7 @@ namespace LibApp.Models
         public string PasswordHash { get; set; }
         public bool HasNewsletterSubscribed { get;set; }
         public MembershipType MembershipType { get; set; }
-        public byte MembershipTypeId { get; set; }
+        public byte MembershipTypeId { get; set; } = 1;
         public DateTime? Birthdate { get; set; }
         public RoleType RoleType { get; set; }
         public byte RoleTypeId { get; set; } = 1; //defaultowo kazdy bedzie userem

@@ -2,7 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using LibApp.Data;
 using LibApp.Dtos;
-using LibApp.Entities;
+using LibApp.Models;
 using LibApp.Models.Validators;
 using LibApp.Services;
 using Microsoft.AspNetCore.Builder;
@@ -74,7 +74,7 @@ namespace LibApp
 
             services.AddScoped<IAccountService, AccountService>();
 
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
 
             services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
         }

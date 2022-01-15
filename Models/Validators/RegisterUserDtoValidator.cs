@@ -24,7 +24,7 @@ namespace LibApp.Models.Validators
 
             RuleFor(x=>x.Email)
                 .Custom((value,context) => {
-                    var emailInUse = dbContext.Users.Any(u => u.Email == value);
+                    var emailInUse = dbContext.Customers.Any(u => u.Email == value);
                     if (emailInUse)
                     {
                         context.AddFailure("Email", "Given email address is already in use");
