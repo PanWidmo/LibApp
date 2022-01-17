@@ -59,6 +59,8 @@ namespace LibApp
                     };
                 });
 
+            services.AddAuthorization();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -70,7 +72,7 @@ namespace LibApp
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddControllersWithViews().AddFluentValidation();
+            services.AddControllers().AddFluentValidation();
 
             services.AddScoped<IAccountService, AccountService>();
 
@@ -94,14 +96,13 @@ namespace LibApp
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthentication();
+            
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
