@@ -2,6 +2,7 @@
 using LibApp.Data;
 using LibApp.Dtos;
 using LibApp.Models;
+using LibApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,83 +24,56 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class BooksController : ControllerBase
     {
-        public BooksController(ApplicationDbContext context, IMapper mapper)
+        public BooksController(IBookService bookService)
         {
-            _context = context;
-            _mapper = mapper;
+            _bookService = bookService;
         }
 
         //GET /api/books
         [HttpGet]
-        [Authorize]
-        public IActionResult GetBooks()
+        public ActionResult GetAllBooks()
         {
-            var books = _context.Books
-                                    .Include(c => c.Genre)
-                                    .ToList()
-                                    .Select(_mapper.Map<Book, BookDto>);
+            var result = _bookService.GetAllBooks();
 
-            return Ok(books);
+            return Ok(result);
         }
 
         //GET /api/books/{id}
-        [HttpGet("{id}", Name = "GetBook")]
-        public IActionResult GetBook(int id)
+        [HttpGet("{id}")]
+        public ActionResult GetBookById(int id)
         {
-            var book = _context.Books.SingleOrDefault(c => c.Id == id);
-            if(book == null)
-            {
-                return NotFound();
-            }
+            var result = _bookService.GetBookById(id);
 
-            return Ok(_mapper.Map<BookDto>(book));
+            return Ok(result);
         }
 
         //POST /api/books
         [HttpPost]
-        public IActionResult CreateBook(BookDto bookDto)
+        public ActionResult CreateNewBook(CreateBookDto createBookDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            var result = _bookService.CreateNewBook(createBookDto);
 
-            var book = _mapper.Map<Book>(bookDto);
-            _context.Books.Add(book);
-            _context.SaveChanges();
-            bookDto.Id = book.Id;
-
-            return CreatedAtRoute(nameof(GetBook), new { id = bookDto.Id }, bookDto);
+            return Created($"api/books/{result}", null);
         }
 
         //PUT /api/books
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, BookDto bookDto)
+        public ActionResult UpdateBook(int id, UpdateBookDto updateBookDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var bookInDb = _context.Books.SingleOrDefault(c => c.Id == bookDto.Id);
-
-            if(bookInDb == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(bookDto, bookInDb);
-            _context.SaveChanges();
+            _bookService.UpdateBook(id, updateBookDto);
 
             return Ok();
-
         }
 
         //DELETE /api/books
         [HttpDelete("{id}")]
-        public IActionResult DeleteCustomer(int id)
+        public ActionResult DeleteBook(int id)
         {
-            var bookInDb = _context.Books.SingleOrDefault(c => c.Id == id);
+            _bookService.DeleteBook(id);
+
+            return Ok();
+
+            /*var bookInDb = _context.Books.SingleOrDefault(c => c.Id == id);
 
             if (bookInDb == null)
             {
@@ -109,10 +83,9 @@ namespace LibApp.Controllers.Api
             _context.Books.Remove(bookInDb);
             _context.SaveChanges();
 
-            return Ok();
+            return Ok();*/
         }
 
-        private ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IBookService _bookService;
     }
 }

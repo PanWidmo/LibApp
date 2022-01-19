@@ -14,6 +14,8 @@ namespace LibApp.Profiles
         {
             CreateMap<Book, BookDto>();
             CreateMap<BookDto, Book>();
+            CreateMap<UpdateBookDto, Book>();
+            CreateMap<Book, UpdateBookDto>();
         }
     }
 }
