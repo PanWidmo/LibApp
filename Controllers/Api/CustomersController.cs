@@ -56,24 +56,18 @@ namespace LibApp.Controllers.Api
 
             return Created($"api/customers/{result}", null);
 
-            /*if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var customer = _mapper.Map<Customer>(customerDto);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            customerDto.Id = customer.Id;
-
-            return CreatedAtRoute(nameof(GetCustomer), new { id = customerDto.Id }, customerDto);*/
         }
 
         // PUT /api/customers 
-        /*[HttpPut("{id}")]
-        public void UpdateCustomer(int id, CustomerDto customerDto)
+        [HttpPut("{id}")]
+        public ActionResult UpdateCustomer(int id, CustomerUpdateCreateDto updateCustomerDto)
         {
-            if (!ModelState.IsValid)
+            _customerService.UpdateCustomer(id, updateCustomerDto);
+
+            return Ok();
+
+
+            /*if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
@@ -87,8 +81,8 @@ namespace LibApp.Controllers.Api
 
             _mapper.Map(customerDto, customerInDb);
 
-            _context.SaveChanges();
-        }*/
+            _context.SaveChanges();*/
+        }
 
         // DELETE /api/customers
         /*[HttpDelete("{id}")]

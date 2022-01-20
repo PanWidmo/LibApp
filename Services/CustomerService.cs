@@ -16,6 +16,7 @@ namespace LibApp.Services
         IEnumerable<Customer> GetAllCustomers();
         CustomerDto GetCustomerById(int customerId);
         int CreateNewCustomer(CustomerUpdateCreateDto createCustomerDto);
+        void UpdateCustomer(int customerId, CustomerUpdateCreateDto updateCustomerDto);
     }
 
     public class CustomerService : ICustomerService
@@ -68,6 +69,19 @@ namespace LibApp.Services
             _context.SaveChanges();
 
             return newCustomer.Id;
+        }
+
+        public void UpdateCustomer(int customerId, CustomerUpdateCreateDto updateCustomerDto)
+        {
+            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == customerId);
+
+            if(customerInDb == null)
+            {
+                throw new NotFoundException("Customer not found");
+            }
+
+            _mapper.Map(updateCustomerDto, customerInDb);
+            _context.SaveChanges();
         }
 
     }
