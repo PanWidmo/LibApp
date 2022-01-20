@@ -15,6 +15,7 @@ namespace LibApp.Services
     {
         IEnumerable<Customer> GetAllCustomers();
         CustomerDto GetCustomerById(int customerId);
+        int CreateNewCustomer(CustomerUpdateCreateDto createCustomerDto);
     }
 
     public class CustomerService : ICustomerService
@@ -48,6 +49,25 @@ namespace LibApp.Services
 
             return customerDto;
 
+        }
+
+        public int CreateNewCustomer (CustomerUpdateCreateDto createCustomerDto)
+        {
+            var newCustomer = new Customer
+            {
+                Name = createCustomerDto.Name,
+                Email = createCustomerDto.Email,
+                PasswordHash = createCustomerDto.PasswordHash,
+                MembershipTypeId = createCustomerDto.MembershipTypeId,
+                HasNewsletterSubscribed = createCustomerDto.HasNewsletterSubscribed,
+                Birthdate = createCustomerDto.Birthdate,
+                RoleTypeId = createCustomerDto.RoleTypeId
+            };
+
+            _context.Customers.Add(newCustomer);
+            _context.SaveChanges();
+
+            return newCustomer.Id;
         }
 
     }

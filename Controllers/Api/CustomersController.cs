@@ -49,12 +49,16 @@ namespace LibApp.Controllers.Api
         }
 
         // POST /api/customers
-        /*[HttpPost]
-        public IActionResult CreateCustomer(CustomerDto customerDto)
+        [HttpPost]
+        public ActionResult CreateNewCustomer(CustomerUpdateCreateDto createCustomerDto)
         {
-            if (!ModelState.IsValid)
+            var result = _customerService.CreateNewCustomer(createCustomerDto);
+
+            return Created($"api/customers/{result}", null);
+
+            /*if (!ModelState.IsValid)
             {
-               return BadRequest();
+                return BadRequest();
             }
 
             var customer = _mapper.Map<Customer>(customerDto);
@@ -62,8 +66,8 @@ namespace LibApp.Controllers.Api
             _context.SaveChanges();
             customerDto.Id = customer.Id;
 
-            return CreatedAtRoute(nameof(GetCustomer), new { id = customerDto.Id }, customerDto);
-        }*/
+            return CreatedAtRoute(nameof(GetCustomer), new { id = customerDto.Id }, customerDto);*/
+        }
 
         // PUT /api/customers 
         /*[HttpPut("{id}")]
