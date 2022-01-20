@@ -39,7 +39,7 @@ namespace LibApp.Services
 
         public BookDto GetBookById(int bookId)
         {
-            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+            var book = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == bookId);
 
             if (book == null)
             {
