@@ -74,6 +74,8 @@ namespace LibApp
 
             services.AddControllers().AddFluentValidation();
 
+            services.AddScoped<ICustomerService, CustomerService>();
+
             services.AddScoped<IBookService, BookService>();
 
             services.AddScoped<IAccountService, AccountService>();

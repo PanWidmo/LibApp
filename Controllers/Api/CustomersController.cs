@@ -2,6 +2,7 @@
 using LibApp.Data;
 using LibApp.Dtos;
 using LibApp.Models;
+using LibApp.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,40 +24,32 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        public CustomersController(ApplicationDbContext context, IMapper mapper)
+        public CustomersController(ICustomerService customerService)
         {
-            _context = context;
-            _mapper = mapper;
+            _customerService = customerService;
         }
 
         // GET /api/customers
         [HttpGet]
-        public IActionResult GetCustomers()
+        public ActionResult GetAllCustomers()
         {
-            var customers = _context.Customers
-                                    .Include(c => c.MembershipType)
-                                    .Include(c => c.RoleType)
-                                    .ToList()
-                                    .Select(_mapper.Map<Customer, CustomerDto>);
+            var result = _customerService.GetAllCustomers();
 
-            return Ok(customers);
+            return Ok(result);
         }
 
         // GET /api/customers/{id}
-        [HttpGet("{id}", Name = "GetCustomer")]
-        public CustomerDto GetCustomer(int id)
+        [HttpGet("{id}")]
+        public ActionResult GetCustomerById(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customer == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
+            var result = _customerService.GetCustomerById(id);
 
-            return _mapper.Map<CustomerDto>(customer);
+            return Ok(result);
+
         }
 
         // POST /api/customers
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -70,10 +63,10 @@ namespace LibApp.Controllers.Api
             customerDto.Id = customer.Id;
 
             return CreatedAtRoute(nameof(GetCustomer), new { id = customerDto.Id }, customerDto);
-        }
+        }*/
 
         // PUT /api/customers 
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public void UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -91,10 +84,10 @@ namespace LibApp.Controllers.Api
             _mapper.Map(customerDto, customerInDb);
 
             _context.SaveChanges();
-        }
+        }*/
 
         // DELETE /api/customers
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public void DeleteCustomer(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
@@ -105,9 +98,8 @@ namespace LibApp.Controllers.Api
 
             _context.Customers.Remove(customerInDb);
             _context.SaveChanges();
-        }
+        }*/
 
-        private ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly ICustomerService _customerService;
     }
 }
