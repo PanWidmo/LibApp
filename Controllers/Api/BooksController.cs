@@ -1,17 +1,6 @@
-﻿using AutoMapper;
-using LibApp.Data;
-using LibApp.Dtos;
-using LibApp.Models;
+﻿using LibApp.Models;
 using LibApp.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
@@ -72,18 +61,6 @@ namespace LibApp.Controllers.Api
             _bookService.DeleteBook(id);
 
             return Ok();
-
-            /*var bookInDb = _context.Books.SingleOrDefault(c => c.Id == id);
-
-            if (bookInDb == null)
-            {
-                return NotFound();
-            }
-
-            _context.Books.Remove(bookInDb);
-            _context.SaveChanges();
-
-            return Ok();*/
         }
 
         private readonly IBookService _bookService;

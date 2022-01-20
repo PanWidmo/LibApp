@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using LibApp.Data;
+using LibApp.Exceptions;
 using LibApp.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LibApp.Services
 {
@@ -13,7 +12,7 @@ namespace LibApp.Services
     {
         IEnumerable<Book> GetAllBooks();
         BookDto GetBookById(int bookId);
-        int CreateNewBook(CreateBookDto dto);
+        int CreateNewBook(CreateBookDto createBookDto);
         void UpdateBook(int bookId, UpdateBookDto updateBookDto);
         void DeleteBook(int bookId);
     }
@@ -29,6 +28,7 @@ namespace LibApp.Services
             _mapper = mapper;
         }
 
+
         public IEnumerable<Book> GetAllBooks()
         {
             var books = _context.Books.Include(b => b.Genre);
@@ -36,21 +36,21 @@ namespace LibApp.Services
             return books;
         }
 
+
         public BookDto GetBookById(int bookId)
         {
             var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
 
-            /*if (book is null)
+            if (book == null)
             {
-                throw new NotFoundException("Dish not found");
-            }*/
+                throw new NotFoundException("Book not found");
+            }
 
             var bookDto = _mapper.Map<BookDto>(book);
 
-
-
             return bookDto;
         }
+
 
         public int CreateNewBook (CreateBookDto createBookDto)
         {
@@ -68,18 +68,30 @@ namespace LibApp.Services
             return newBook.Id;
         }
 
+
         public void UpdateBook(int bookId, UpdateBookDto updateBookDto)
         {
             var bookInDb = _context.Books.SingleOrDefault(b => b.Id == bookId);
+
+            if(bookInDb == null)
+            {
+                throw new NotFoundException("Book not found");
+            }
 
             _mapper.Map(updateBookDto, bookInDb);
             _context.SaveChanges();
 
         }
 
+
         public void DeleteBook(int bookId)
         {
             var bookInDb = _context.Books.SingleOrDefault(b => b.Id == bookId);
+
+            if (bookInDb == null)
+            {
+                throw new NotFoundException("Book not found");
+            }
 
             _context.Books.Remove(bookInDb);
             _context.SaveChanges();
