@@ -38,7 +38,7 @@ namespace LibApp.Controllers.Api
 
         //POST /api/books
         [HttpPost]
-        public ActionResult CreateNewBook(CreateBookDto createBookDto)
+        public ActionResult CreateNewBook(BookUpdateCreateDto createBookDto)
         {
             var result = _bookService.CreateNewBook(createBookDto);
 
@@ -47,7 +47,7 @@ namespace LibApp.Controllers.Api
 
         //PUT /api/books
         [HttpPut("{id}")]
-        public ActionResult UpdateBook(int id, UpdateBookDto updateBookDto)
+        public ActionResult UpdateBook(int id, BookUpdateCreateDto updateBookDto)
         {
             _bookService.UpdateBook(id, updateBookDto);
 

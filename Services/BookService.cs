@@ -12,8 +12,8 @@ namespace LibApp.Services
     {
         IEnumerable<Book> GetAllBooks();
         BookDto GetBookById(int bookId);
-        int CreateNewBook(CreateBookDto createBookDto);
-        void UpdateBook(int bookId, UpdateBookDto updateBookDto);
+        int CreateNewBook(BookUpdateCreateDto createBookDto);
+        void UpdateBook(int bookId, BookUpdateCreateDto updateBookDto);
         void DeleteBook(int bookId);
     }
 
@@ -52,7 +52,7 @@ namespace LibApp.Services
         }
 
 
-        public int CreateNewBook (CreateBookDto createBookDto)
+        public int CreateNewBook (BookUpdateCreateDto createBookDto)
         {
             var newBook = new Book
             {
@@ -69,7 +69,7 @@ namespace LibApp.Services
         }
 
 
-        public void UpdateBook(int bookId, UpdateBookDto updateBookDto)
+        public void UpdateBook(int bookId, BookUpdateCreateDto updateBookDto)
         {
             var bookInDb = _context.Books.SingleOrDefault(b => b.Id == bookId);
 
