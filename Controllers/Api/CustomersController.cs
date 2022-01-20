@@ -45,7 +45,6 @@ namespace LibApp.Controllers.Api
             var result = _customerService.GetCustomerById(id);
 
             return Ok(result);
-
         }
 
         // POST /api/customers
@@ -55,7 +54,6 @@ namespace LibApp.Controllers.Api
             var result = _customerService.CreateNewCustomer(createCustomerDto);
 
             return Created($"api/customers/{result}", null);
-
         }
 
         // PUT /api/customers 
@@ -65,38 +63,16 @@ namespace LibApp.Controllers.Api
             _customerService.UpdateCustomer(id, updateCustomerDto);
 
             return Ok();
-
-
-            /*if (!ModelState.IsValid)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == customerDto.Id);
-
-            if (customerInDb == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
-
-            _mapper.Map(customerDto, customerInDb);
-
-            _context.SaveChanges();*/
         }
 
         // DELETE /api/customers
-        /*[HttpDelete("{id}")]
-        public void DeleteCustomer(int id)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCustomer(int id)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customerInDb == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
+            _customerService.DeleteCustomer(id);
 
-            _context.Customers.Remove(customerInDb);
-            _context.SaveChanges();
-        }*/
+            return Ok();
+        }
 
         private readonly ICustomerService _customerService;
     }
