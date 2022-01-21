@@ -24,18 +24,9 @@ namespace LibApp.Controllers
             return View();
         }
 
-        public IActionResult Details(int id)
+        public ViewResult Details()
         {
-            var book = _context.Books
-                .Include(b => b.Genre)
-                .SingleOrDefault(b => b.Id == id);
-
-            if (book == null)
-            {
-                return Content("Book not found");
-            }
-
-            return View(book);
+            return View();
         }
 
         public IActionResult Edit(int id)

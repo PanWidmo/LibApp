@@ -24,19 +24,9 @@ namespace LibApp.Controllers
             return View();
         }
 
-        public IActionResult Details(int id)
+        public ViewResult Details()
         {
-            var customer = _context.Customers
-                .Include(c => c.MembershipType)
-                .Include(c => c.RoleType)
-                .SingleOrDefault(c => c.Id == id);
-
-            if(customer == null)
-            {
-                return Content("User not found");
-            }
-
-            return View(customer);
+            return View();
         }
 
         public IActionResult New()
