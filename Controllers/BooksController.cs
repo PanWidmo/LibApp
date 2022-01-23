@@ -46,7 +46,7 @@ namespace LibApp.Controllers
             return View("BookForm", viewModel);
         }
 
-        public IActionResult New()
+        public ActionResult New()
         {
             var genres = _context.Genres.ToList();
 

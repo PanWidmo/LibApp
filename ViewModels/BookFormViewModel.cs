@@ -15,7 +15,7 @@ namespace LibApp.ViewModels
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please provide author's name")]
-        [Display(Name="Author's name")]
+        [Display(Name = "Author's name")]
         public string AuthorName { get; set; }
 
         [Required(ErrorMessage = "Please select Genre Type")]
@@ -24,7 +24,7 @@ namespace LibApp.ViewModels
 
         [Display(Name = "Number in stock")]
         [Required(ErrorMessage = "Please provide number in stock value")]
-        [Range(1,20)]
+        [Range(1, 20)]
         public int? NumberInStock { get; set; }
 
         public IEnumerable<Genre> Genres { get; set; }

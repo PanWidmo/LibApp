@@ -52,7 +52,7 @@ namespace LibApp.Services
         }
 
 
-        public int CreateNewBook (BookUpdateCreateDto createBookDto)
+        public int CreateNewBook(BookUpdateCreateDto createBookDto)
         {
             var newBook = new Book
             {

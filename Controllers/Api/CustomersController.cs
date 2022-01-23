@@ -31,7 +31,7 @@ namespace LibApp.Controllers.Api
 
         // GET /api/customers
         [HttpGet]
-        public ActionResult GetAllCustomers()
+        public IActionResult GetAllCustomers()
         {
             var result = _customerService.GetAllCustomers();
 
@@ -40,7 +40,7 @@ namespace LibApp.Controllers.Api
 
         // GET /api/customers/{id}
         [HttpGet("{id}")]
-        public ActionResult GetCustomerById(int id)
+        public IActionResult GetCustomerById(int id)
         {
             var result = _customerService.GetCustomerById(id);
 
@@ -58,7 +58,7 @@ namespace LibApp.Controllers.Api
 
         // PUT /api/customers 
         [HttpPut("{id}")]
-        public ActionResult UpdateCustomer(int id, CustomerUpdateCreateDto updateCustomerDto)
+        public IActionResult UpdateCustomer(int id, CustomerUpdateCreateDto updateCustomerDto)
         {
             _customerService.UpdateCustomer(id, updateCustomerDto);
 
@@ -67,7 +67,7 @@ namespace LibApp.Controllers.Api
 
         // DELETE /api/customers
         [HttpDelete("{id}")]
-        public ActionResult DeleteCustomer(int id)
+        public IActionResult DeleteCustomer(int id)
         {
             _customerService.DeleteCustomer(id);
 

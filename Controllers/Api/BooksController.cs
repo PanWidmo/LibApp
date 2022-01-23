@@ -20,7 +20,7 @@ namespace LibApp.Controllers.Api
 
         //GET /api/books
         [HttpGet]
-        public ActionResult GetAllBooks()
+        public IActionResult GetAllBooks()
         {
             var result = _bookService.GetAllBooks();
 
@@ -29,7 +29,7 @@ namespace LibApp.Controllers.Api
 
         //GET /api/books/{id}
         [HttpGet("{id}")]
-        public ActionResult GetBookById(int id)
+        public IActionResult GetBookById(int id)
         {
             var result = _bookService.GetBookById(id);
 
@@ -38,7 +38,7 @@ namespace LibApp.Controllers.Api
 
         //POST /api/books
         [HttpPost]
-        public ActionResult CreateNewBook(BookUpdateCreateDto createBookDto)
+        public IActionResult CreateNewBook(BookUpdateCreateDto createBookDto)
         {
             var result = _bookService.CreateNewBook(createBookDto);
 
@@ -47,7 +47,7 @@ namespace LibApp.Controllers.Api
 
         //PUT /api/books
         [HttpPut("{id}")]
-        public ActionResult UpdateBook(int id, BookUpdateCreateDto updateBookDto)
+        public IActionResult UpdateBook(int id, BookUpdateCreateDto updateBookDto)
         {
             _bookService.UpdateBook(id, updateBookDto);
 
@@ -56,7 +56,7 @@ namespace LibApp.Controllers.Api
 
         //DELETE /api/books
         [HttpDelete("{id}")]
-        public ActionResult DeleteBook(int id)
+        public IActionResult DeleteBook(int id)
         {
             _bookService.DeleteBook(id);
 
