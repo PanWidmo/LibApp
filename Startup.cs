@@ -77,14 +77,11 @@ namespace LibApp
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddScoped<ICustomerService, CustomerService>();
-
             services.AddScoped<IBookService, BookService>();
-
             services.AddScoped<IAccountService, AccountService>();
-
             services.AddScoped<IGenreService, GenreService>();
-
             services.AddScoped<IMembershipTypeService, MembershipTypeService>();
+            services.AddScoped<IRoleTypeService, RoleTypeService>();
 
             services.AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
 
