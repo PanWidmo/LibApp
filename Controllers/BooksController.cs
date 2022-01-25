@@ -48,14 +48,16 @@ namespace LibApp.Controllers
 
         public ActionResult New()
         {
-            var genres = _context.Genres.ToList();
+            return View();
 
-            var viewModel = new BookFormViewModel()
+            /*var genres = _context.Genres.ToList();*/
+
+            /*var viewModel = new BookFormViewModel()
             {
                 Genres = genres
-            };
+            };*/
 
-            return View("BookForm", viewModel);
+            /*return View("BookForm", viewModel);*/
         }
 
         [HttpPost]
