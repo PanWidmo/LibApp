@@ -84,6 +84,8 @@ namespace LibApp
 
             services.AddScoped<IGenreService, GenreService>();
 
+            services.AddScoped<IMembershipTypeService, MembershipTypeService>();
+
             services.AddScoped<IPasswordHasher<Customer>, PasswordHasher<Customer>>();
 
             services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
