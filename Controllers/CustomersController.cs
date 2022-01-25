@@ -29,9 +29,11 @@ namespace LibApp.Controllers
             return View();
         }
 
-        public IActionResult New()
+        public ViewResult New()
         {
-            var membershipTypes = _context.MembershipTypes.ToList();
+            return View();
+
+            /*var membershipTypes = _context.MembershipTypes.ToList();
             var roleTypes = _context.RoleTypes.ToList();
 
             var viewModel = new CustomerFormViewModel()
@@ -39,7 +41,7 @@ namespace LibApp.Controllers
                 MembershipTypes = membershipTypes,
                 RoleTypes = roleTypes
             };
-            return View("CustomerForm", viewModel);
+            return View("CustomerForm", viewModel);*/
         }
 
         public IActionResult Edit(int id)

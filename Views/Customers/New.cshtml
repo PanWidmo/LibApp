@@ -1,0 +1,99 @@
+﻿@model LibApp.ViewModels.CustomerFormViewModel
+
+@{
+    ViewBag.Title = "New customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>New customer</h2>
+
+@Html.AntiForgeryToken()
+<form>
+
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PasswordHash)
+        @Html.TextBoxFor(m => m.PasswordHash, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PasswordHash)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Birthdate)
+        @Html.TextBoxFor(m => m.Birthdate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Birthdate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MembershipTypeId)
+        @Html.DropDownListFor(m => m.MembershipTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MembershipTypeId)
+    </div>
+    <div class="form-group">
+        <label class="form-check-label">
+            @Html.CheckBoxFor(m => m.HasNewsletterSubscribed)
+            Subscribed to Newsletter?
+        </label>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+
+    <button id="addCustomer" type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/api/membershiptypes",
+                method: "GET",
+                success: function (data) {
+                    $.each(data, function (i, membership) {
+                        $("#MembershipTypeId").append(
+                            $('<option></option>').val(membership.id).html(membership.name));
+                    });
+                }
+            })
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#addCustomer").click(function (e) {
+                e.preventDefault();
+
+                var obj = JSON.stringify({
+                    name: $("#Name").val(),
+                    email: $("#Email").val(),
+                    passwordHash: $("#PasswordHash").val(),
+                    birthdate: $("#Birthdate").val(),
+                    membershipTypeId: $("#MembershipTypeId").val(),
+                    hasNewsletterSubscribed: $("#HasNewsletterSubscribed").prop("checked")
+                });
+
+                $.ajax({
+                    url: "/api/customers",
+                    method: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: obj,
+                    success: function () {
+                        window.location.href = "/Customers";
+                    }
+                });
+            });
+        })
+    </script>
+}
