@@ -13,16 +13,18 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class BooksController : ControllerBase
     {
+        private readonly IBookService bookService;
+
         public BooksController(IBookService bookService)
         {
-            _bookService = bookService;
+            this.bookService = bookService;
         }
 
         //GET /api/books
         [HttpGet]
         public IActionResult GetAllBooks()
         {
-            var result = _bookService.GetAllBooks();
+            var result = bookService.GetAllBooks();
 
             return Ok(result);
         }
@@ -31,7 +33,7 @@ namespace LibApp.Controllers.Api
         [HttpGet("{id}")]
         public IActionResult GetBookById(int id)
         {
-            var result = _bookService.GetBookById(id);
+            var result = bookService.GetBookById(id);
 
             return Ok(result);
         }
@@ -40,7 +42,7 @@ namespace LibApp.Controllers.Api
         [HttpPost]
         public IActionResult CreateNewBook(BookUpdateCreateDto createBookDto)
         {
-            var result = _bookService.CreateNewBook(createBookDto);
+            var result = bookService.CreateNewBook(createBookDto);
 
             return Created($"api/books/{result}", null);
         }
@@ -49,7 +51,7 @@ namespace LibApp.Controllers.Api
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, BookUpdateCreateDto updateBookDto)
         {
-            _bookService.UpdateBook(id, updateBookDto);
+            bookService.UpdateBook(id, updateBookDto);
 
             return Ok();
         }
@@ -58,11 +60,10 @@ namespace LibApp.Controllers.Api
         [HttpDelete("{id}")]
         public IActionResult DeleteBook(int id)
         {
-            _bookService.DeleteBook(id);
+            bookService.DeleteBook(id);
 
             return Ok();
         }
 
-        private readonly IBookService _bookService;
     }
 }

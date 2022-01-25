@@ -22,32 +22,32 @@ namespace LibApp.Services
 
     public class CustomerService : ICustomerService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
         public CustomerService(ApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
 
         public IEnumerable<Customer> GetAllCustomers()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).Include(c => c.RoleType);
+            var customers = context.Customers.Include(c => c.MembershipType).Include(c => c.RoleType);
 
             return customers;
         }
 
         public CustomerDto GetCustomerById(int customerId)
         {
-            var customer = _context.Customers.Include(c => c.MembershipType).Include(c => c.RoleType).SingleOrDefault(c => c.Id == customerId);
+            var customer = context.Customers.Include(c => c.MembershipType).Include(c => c.RoleType).SingleOrDefault(c => c.Id == customerId);
 
             if (customer == null)
             {
                 throw new NotFoundException("Customer not found");
             }
 
-            var customerDto = _mapper.Map<CustomerDto>(customer);
+            var customerDto = mapper.Map<CustomerDto>(customer);
 
             return customerDto;
 
@@ -66,36 +66,36 @@ namespace LibApp.Services
                 RoleTypeId = createCustomerDto.RoleTypeId
             };
 
-            _context.Customers.Add(newCustomer);
-            _context.SaveChanges();
+            context.Customers.Add(newCustomer);
+            context.SaveChanges();
 
             return newCustomer.Id;
         }
 
         public void UpdateCustomer(int customerId, CustomerUpdateCreateDto updateCustomerDto)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == customerId);
+            var customerInDb = context.Customers.SingleOrDefault(c => c.Id == customerId);
 
             if(customerInDb == null)
             {
                 throw new NotFoundException("Customer not found");
             }
 
-            _mapper.Map(updateCustomerDto, customerInDb);
-            _context.SaveChanges();
+            mapper.Map(updateCustomerDto, customerInDb);
+            context.SaveChanges();
         }
 
         public void DeleteCustomer(int customerId)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == customerId);
+            var customerInDb = context.Customers.SingleOrDefault(c => c.Id == customerId);
 
             if (customerInDb == null)
             {
                 throw new NotFoundException("Customer not found");
             }
 
-            _context.Customers.Remove(customerInDb);
-            _context.SaveChanges();
+            context.Customers.Remove(customerInDb);
+            context.SaveChanges();
 
         }
 

@@ -23,11 +23,15 @@ namespace LibApp.Services
 
     public class AccountService : IAccountService
     {
+        private readonly ApplicationDbContext context;
+        private readonly IPasswordHasher<Customer> passwordHasher;
+        private readonly AuthenticationSettings authenticationSettings;
+
         public AccountService(ApplicationDbContext context, IPasswordHasher<Customer> passwordHasher, AuthenticationSettings authentication)
         {
-            _context = context;
-            _passwordHasher = passwordHasher;
-            _authenticationSettings = authentication;
+            this.context = context;
+            this.passwordHasher = passwordHasher;
+            this.authenticationSettings = authentication;
         }
 
         public void RegisterUser(RegisterUserDto registerDto)
@@ -39,16 +43,16 @@ namespace LibApp.Services
                 RoleTypeId = registerDto.RoleTypeId
             };
 
-            var hashedPassword = _passwordHasher.HashPassword(newCustomer, registerDto.Password);
+            var hashedPassword = passwordHasher.HashPassword(newCustomer, registerDto.Password);
             newCustomer.PasswordHash = hashedPassword;
 
-            _context.Customers.Add(newCustomer);
-            _context.SaveChanges();
+            context.Customers.Add(newCustomer);
+            context.SaveChanges();
         }
 
         public string GenerateJWT(LoginUserDto loginDto)
         {
-            var customer = _context.Customers
+            var customer = context.Customers
                 .Include(u => u.RoleType)
                 .FirstOrDefault(u => u.Email == loginDto.Email);
 
@@ -57,7 +61,7 @@ namespace LibApp.Services
                 throw new BadRequestException("Invalid email or password");
             }
 
-            var result = _passwordHasher.VerifyHashedPassword(customer, customer.PasswordHash, loginDto.Password);
+            var result = passwordHasher.VerifyHashedPassword(customer, customer.PasswordHash, loginDto.Password);
 
             if(result == PasswordVerificationResult.Failed)
             {
@@ -71,13 +75,13 @@ namespace LibApp.Services
                 new Claim(ClaimTypes.Role, $"{customer.RoleType.Name}"),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey));
             var credentiles = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
+            var expires = DateTime.Now.AddDays(authenticationSettings.JwtExpireDays);
 
             var token = new JwtSecurityToken(
-                    _authenticationSettings.JwtIssuer,
-                    _authenticationSettings.JwtIssuer,
+                    authenticationSettings.JwtIssuer,
+                    authenticationSettings.JwtIssuer,
                     claims,
                     expires: expires,
                     signingCredentials: credentiles);
@@ -87,8 +91,5 @@ namespace LibApp.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private readonly ApplicationDbContext _context;
-        private readonly IPasswordHasher<Customer> _passwordHasher;
-        private readonly AuthenticationSettings _authenticationSettings;
     }
 }

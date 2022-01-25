@@ -13,25 +13,26 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class AccountsController : ControllerBase
     {
+        private readonly IAccountService accountService;
+
         public AccountsController(IAccountService accountService)
         {
-            _accountService = accountService;
+            this.accountService = accountService;
         }
 
         [HttpPost("register")]
-        public ActionResult RegisterUser([FromBody] RegisterUserDto registerDto)
+        public IActionResult RegisterUser([FromBody] RegisterUserDto registerDto)
         {
-            _accountService.RegisterUser(registerDto);
+            accountService.RegisterUser(registerDto);
             return Ok();
         }
 
         [HttpPost("login")]
-        public ActionResult Login([FromBody] LoginUserDto loginDto)
+        public IActionResult Login([FromBody] LoginUserDto loginDto)
         {
-            string token = _accountService.GenerateJWT(loginDto);
+            string token = accountService.GenerateJWT(loginDto);
             return Ok(token);
         }
 
-        private readonly IAccountService _accountService;
     }
 }

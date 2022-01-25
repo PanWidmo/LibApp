@@ -19,19 +19,19 @@ namespace LibApp.Services
 
     public class BookService : IBookService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
         public BookService(ApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            this.context = context;
+            this.mapper = mapper;
         }
 
 
         public IEnumerable<Book> GetAllBooks()
         {
-            var books = _context.Books.Include(b => b.Genre);
+            var books = context.Books.Include(b => b.Genre);
 
             return books;
         }
@@ -39,14 +39,14 @@ namespace LibApp.Services
 
         public BookDto GetBookById(int bookId)
         {
-            var book = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == bookId);
+            var book = context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == bookId);
 
             if (book == null)
             {
                 throw new NotFoundException("Book not found");
             }
 
-            var bookDto = _mapper.Map<BookDto>(book);
+            var bookDto = mapper.Map<BookDto>(book);
 
             return bookDto;
         }
@@ -62,8 +62,8 @@ namespace LibApp.Services
                 NumberInStock = createBookDto.NumberInStock
             };
 
-            _context.Books.Add(newBook);
-            _context.SaveChanges();
+            context.Books.Add(newBook);
+            context.SaveChanges();
 
             return newBook.Id;
         }
@@ -71,30 +71,30 @@ namespace LibApp.Services
 
         public void UpdateBook(int bookId, BookUpdateCreateDto updateBookDto)
         {
-            var bookInDb = _context.Books.SingleOrDefault(b => b.Id == bookId);
+            var bookInDb = context.Books.SingleOrDefault(b => b.Id == bookId);
 
             if(bookInDb == null)
             {
                 throw new NotFoundException("Book not found");
             }
 
-            _mapper.Map(updateBookDto, bookInDb);
-            _context.SaveChanges();
+            mapper.Map(updateBookDto, bookInDb);
+            context.SaveChanges();
 
         }
 
 
         public void DeleteBook(int bookId)
         {
-            var bookInDb = _context.Books.SingleOrDefault(b => b.Id == bookId);
+            var bookInDb = context.Books.SingleOrDefault(b => b.Id == bookId);
 
             if (bookInDb == null)
             {
                 throw new NotFoundException("Book not found");
             }
 
-            _context.Books.Remove(bookInDb);
-            _context.SaveChanges();
+            context.Books.Remove(bookInDb);
+            context.SaveChanges();
 
         }
 

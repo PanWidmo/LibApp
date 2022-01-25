@@ -24,16 +24,18 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        private readonly ICustomerService customerService;
+
         public CustomersController(ICustomerService customerService)
         {
-            _customerService = customerService;
+            this.customerService = customerService;
         }
 
         // GET /api/customers
         [HttpGet]
         public IActionResult GetAllCustomers()
         {
-            var result = _customerService.GetAllCustomers();
+            var result = customerService.GetAllCustomers();
 
             return Ok(result);
         }
@@ -42,16 +44,16 @@ namespace LibApp.Controllers.Api
         [HttpGet("{id}")]
         public IActionResult GetCustomerById(int id)
         {
-            var result = _customerService.GetCustomerById(id);
+            var result = customerService.GetCustomerById(id);
 
             return Ok(result);
         }
 
         // POST /api/customers
         [HttpPost]
-        public ActionResult CreateNewCustomer(CustomerUpdateCreateDto createCustomerDto)
+        public IActionResult CreateNewCustomer(CustomerUpdateCreateDto createCustomerDto)
         {
-            var result = _customerService.CreateNewCustomer(createCustomerDto);
+            var result = customerService.CreateNewCustomer(createCustomerDto);
 
             return Created($"api/customers/{result}", null);
         }
@@ -60,7 +62,7 @@ namespace LibApp.Controllers.Api
         [HttpPut("{id}")]
         public IActionResult UpdateCustomer(int id, CustomerUpdateCreateDto updateCustomerDto)
         {
-            _customerService.UpdateCustomer(id, updateCustomerDto);
+            customerService.UpdateCustomer(id, updateCustomerDto);
 
             return Ok();
         }
@@ -69,11 +71,10 @@ namespace LibApp.Controllers.Api
         [HttpDelete("{id}")]
         public IActionResult DeleteCustomer(int id)
         {
-            _customerService.DeleteCustomer(id);
+            customerService.DeleteCustomer(id);
 
             return Ok();
         }
 
-        private readonly ICustomerService _customerService;
     }
 }
