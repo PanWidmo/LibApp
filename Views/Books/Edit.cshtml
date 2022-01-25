@@ -1,12 +1,12 @@
 ﻿@model LibApp.ViewModels.BookFormViewModel
 
 @{
-    ViewBag.Title = "New book";
+    ViewBag.Title = "Edit book";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-<h2>New book</h2>
+<h2>Edit book</h2>
 
 @Html.AntiForgeryToken()
 <form>
@@ -25,7 +25,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.GenreId)
-        @Html.DropDownListFor(m => m.GenreId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select Genre Type", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.GenreId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.GenreId)
     </div>
     <div class="form-group">
@@ -36,7 +36,7 @@
 
     @Html.HiddenFor(m => m.Id)
 
-    <button id="addBook" type="submit" class="btn btn-primary">Save</button>
+    <button id="updateBook" type="submit" class="btn btn-primary">Save</button>
 </form>
 
 @section Scripts
@@ -60,8 +60,27 @@
     </script>
 
     <script>
+        var id = @Url.ActionContext.RouteData.Values["id"];
+
         $(document).ready(function () {
-            $("#addBook").click(function (e) {
+            $.ajax({
+                url: "/api/books/" + id,
+                method: "GET",
+                success: function (data) {
+                    $('#Name').val(data.name),
+                    $('#AuthorName').val(data.authorName),
+                    $('#GenreId').val(data.genre.id),
+                    $('#NumberInStock').val(data.numberInStock)
+                }
+            })
+        });
+    </script>
+
+    <script type="text/javascript">
+        var id = @Url.ActionContext.RouteData.Values["id"];
+
+        $(document).ready(function () {
+            $("#updateBook").click(function (e) {
                 e.preventDefault();
 
                 var obj = JSON.stringify({
@@ -72,12 +91,12 @@
                 });
 
                 $.ajax({
-                    url: "/api/books",
-                    method: "POST",
+                    url: "/api/books/" + id,
+                    method: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: obj,
                     success: function () {
-                        window.location.href = "/Books";
+                        window.location.href = "/Books/Details/" + id;
                     }
                 });
             });
