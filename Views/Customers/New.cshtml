@@ -73,7 +73,6 @@
     <script>
         $(document).ready(function () {
             $("#addCustomer").click(function (e) {
-                e.preventDefault();
 
                 var obj = JSON.stringify({
                     name: $("#Name").val(),
@@ -84,12 +83,15 @@
                     hasNewsletterSubscribed: $("#HasNewsletterSubscribed").prop("checked")
                 });
 
+                if (!Page.isValid) return;
+
                 $.ajax({
                     url: "/api/customers",
                     method: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: obj,
                     success: function () {
+                        e.preventDefault();
                         window.location.href = "/Customers";
                     }
                 });

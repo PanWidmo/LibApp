@@ -62,7 +62,6 @@
     <script>
         $(document).ready(function () {
             $("#addBook").click(function (e) {
-                e.preventDefault();
 
                 var obj = JSON.stringify({
                     name: $("#Name").val(),
@@ -71,12 +70,15 @@
                     numberInStock: $("#NumberInStock").val()
                 });
 
+                if (!Page.isValid) return;
+
                 $.ajax({
                     url: "/api/books",
                     method: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: obj,
                     success: function () {
+                        e.preventDefault();
                         window.location.href = "/Books";
                     }
                 });
