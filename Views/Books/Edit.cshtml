@@ -89,8 +89,6 @@
                     numberInStock: $("#NumberInStock").val()
                 });
 
-                if (!Page.isValid) return;
-
                 $.ajax({
                     url: "/api/books/" + id,
                     method: "PUT",
@@ -101,6 +99,8 @@
                         window.location.href = "/Books/Details/" + id;
                     }
                 });
+
+                e.preventDefault();
             });
         })
     </script>

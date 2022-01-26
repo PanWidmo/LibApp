@@ -1,16 +1,16 @@
 ﻿@model LibApp.ViewModels.CustomerFormViewModel
 
 @{
-    ViewBag.Title = "New customer";
+    ViewBag.Title = "Edit customer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-<h2>New customer</h2>
+<h2>Edit customer</h2>
 
-@Html.AntiForgeryToken()
 <form>
 
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <div class="form-group">
@@ -35,8 +35,13 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.MembershipTypeId)
-        @Html.DropDownListFor(m => m.MembershipTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.MembershipTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.MembershipTypeId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RoleTypeId)
+        @Html.DropDownListFor(m => m.RoleTypeId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RoleTypeId)
     </div>
     <div class="form-group">
         <label class="form-check-label">
@@ -47,7 +52,7 @@
 
     @Html.HiddenFor(m => m.Id)
 
-    <button id="addCustomer" type="submit" class="btn btn-primary">Save</button>
+    <button id="updateCustomer" type="submit" class="btn btn-primary">Save</button>
 </form>
 
 @section Scripts
@@ -72,7 +77,44 @@
 
     <script>
         $(document).ready(function () {
-            $("#addCustomer").click(function (e) {
+            $.ajax({
+                url: "/api/roletypes",
+                method: "GET",
+                success: function (data) {
+                    $.each(data, function (i, role) {
+                        $("#RoleTypeId").append(
+                            $('<option></option>').val(role.id).html(role.name));
+                    });
+                }
+            })
+        });
+    </script>
+
+    <script>
+        var id = @Url.ActionContext.RouteData.Values["id"];
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "/api/customers/" + id,
+                method: "GET",
+                success: function (data) {
+                    $('#Name').val(data.name),
+                    $('#Email').val(data.email),
+                    $('#PasswordHash').val(data.passwordHash),
+                    $('#Birthdate').val(data.birthdate),
+                    $('#MembershipTypeId').val(data.membershipType.id),
+                    $('#RoleTypeId').val(data.roleType.id),
+                    $('#HasNewsletterSubscribed').val(data.hasNewsletterSubscribed)
+                }
+            })
+        });
+    </script>
+
+    <script>
+        var id = @Url.ActionContext.RouteData.Values["id"];
+
+        $(document).ready(function () {
+            $("#updateCustomer").click(function (e) {
 
                 var obj = JSON.stringify({
                     name: $("#Name").val(),
@@ -80,17 +122,17 @@
                     passwordHash: $("#PasswordHash").val(),
                     birthdate: $("#Birthdate").val(),
                     membershipTypeId: $("#MembershipTypeId").val(),
+                    roleTypeId: $("#RoleTypeId").val(),
                     hasNewsletterSubscribed: $("#HasNewsletterSubscribed").prop("checked")
                 });
 
-
                 $.ajax({
-                    url: "/api/customers",
-                    method: "POST",
+                    url: "/api/customers/" + id,
+                    method: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: obj,
                     success: function () {
-                        window.location.href = "/Customers";
+                        window.location.href = "/Customers/Details/" + id;
                     }
                 });
 

@@ -7,12 +7,9 @@
 }
 
 <h2>New book</h2>
-
-@Html.AntiForgeryToken()
-<form>
+<form id="#form">
 
     @Html.ValidationSummary(true)
-
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -35,6 +32,7 @@
     </div>
 
     @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
 
     <button id="addBook" type="submit" class="btn btn-primary">Save</button>
 </form>
@@ -70,18 +68,17 @@
                     numberInStock: $("#NumberInStock").val()
                 });
 
-                if (!Page.isValid) return;
-
                 $.ajax({
                     url: "/api/books",
                     method: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: obj,
                     success: function () {
-                        e.preventDefault();
                         window.location.href = "/Books";
                     }
                 });
+
+                e.preventDefault();
             });
         })
     </script>
