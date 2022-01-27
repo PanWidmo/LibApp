@@ -7,9 +7,11 @@
 }
 
 <h2>New book</h2>
-<form id="#form">
+
+<form id="form">
 
     @Html.ValidationSummary(true)
+
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -68,17 +70,20 @@
                     numberInStock: $("#NumberInStock").val()
                 });
 
-                $.ajax({
-                    url: "/api/books",
-                    method: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: obj,
-                    success: function () {
-                        window.location.href = "/Books";
-                    }
-                });
+                if ($("#form").valid() == true) {
+                    $.ajax({
+                        url: "/api/books",
+                        method: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: obj,
+                        success: function () {
+                            window.location.href = "/Books";
+                        }
+                    });
 
-                e.preventDefault();
+                    e.preventDefault();
+                }
+
             });
         })
     </script>

@@ -8,7 +8,7 @@
 
 <h2>Registration</h2>
 
-<form>
+<form id="form">
 
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -74,17 +74,19 @@
                 roleTypeId: $("#RoleTypeId").val()
             });
 
-            $.ajax({
-                url: "/api/accounts/register",
-                method: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: obj,
-                success: function () {
-                    window.location.href = "/Customers";
-                }
-            });
+            if ($("#form").valid() == true) {
+                $.ajax({
+                    url: "/api/accounts/register",
+                    method: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: obj,
+                    success: function () {
+                        window.location.href = "/Customers";
+                    }
+                });
 
-            e.preventDefault();
+                e.preventDefault();
+            }
         });
     })
 </script>

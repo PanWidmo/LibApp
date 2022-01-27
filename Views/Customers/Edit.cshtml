@@ -8,7 +8,7 @@
 
 <h2>Edit customer</h2>
 
-<form>
+<form id="form">
 
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -125,17 +125,20 @@
                     hasNewsletterSubscribed: $("#HasNewsletterSubscribed").prop("checked")
                 });
 
-                $.ajax({
-                    url: "/api/customers/" + id,
-                    method: "PUT",
-                    contentType: "application/json; charset=utf-8",
-                    data: obj,
-                    success: function () {
-                        window.location.href = "/Customers/Details/" + id;
-                    }
-                });
+                if ($("#form").valid() == true) {
+                    $.ajax({
+                        url: "/api/customers/" + id,
+                        method: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: obj,
+                        success: function () {
+                            window.location.href = "/Customers/Details/" + id;
+                        }
+                    });
 
-                e.preventDefault();
+                    e.preventDefault();
+                }
+
             });
         })
     </script>

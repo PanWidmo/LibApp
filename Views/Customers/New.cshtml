@@ -8,9 +8,10 @@
 
 <h2>New customer</h2>
 
-@Html.AntiForgeryToken()
-<form>
 
+<form id="form">
+
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <div class="form-group">
@@ -83,18 +84,20 @@
                     hasNewsletterSubscribed: $("#HasNewsletterSubscribed").prop("checked")
                 });
 
+                if ($("#form").valid() == true) {
+                    $.ajax({
+                        url: "/api/customers",
+                        method: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: obj,
+                        success: function () {
+                            window.location.href = "/Customers";
+                        }
+                    });
 
-                $.ajax({
-                    url: "/api/customers",
-                    method: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: obj,
-                    success: function () {
-                        window.location.href = "/Customers";
-                    }
-                });
+                    e.preventDefault();
+                }
 
-                e.preventDefault();
             });
         })
     </script>

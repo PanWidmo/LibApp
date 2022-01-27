@@ -8,7 +8,7 @@
 
 <h2>Login</h2>
 
-<form>
+<form id="form">
 
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -51,7 +51,6 @@
 
 
 <script>
-
     $(document).ready(function () {
         $("#register").click(function (e) {
 
@@ -60,17 +59,19 @@
                 password: $("#PasswordHash").val(),
             });
 
-            $.ajax({
-                url: "/api/accounts/login",
-                method: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: obj,
-                success: function () {
-                    window.location.href = "/Customers";
-                }
-            });
+            if ($("#form").valid() == true) {
+                $.ajax({
+                    url: "/api/accounts/login",
+                    method: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: obj,
+                    success: function () {
+                        window.location.href = "/Customers";
+                    }
+                });
 
-            e.preventDefault();
+                e.preventDefault();
+            }
         });
     })
 </script>

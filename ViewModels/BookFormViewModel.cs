@@ -29,13 +29,6 @@ namespace LibApp.ViewModels
 
         public IEnumerable<Genre> Genres { get; set; }
 
-        public string Title
-        {
-            get
-            {
-                return Id != 0 ? "Edit Book" : "New Book";
-            }
-        }
 
         public BookFormViewModel()
         {

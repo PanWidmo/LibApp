@@ -11,15 +11,15 @@ namespace LibApp.ViewModels
     {
         public int? Id { get; set; }
 
-        [Required(ErrorMessage = "Please provide customer's name")]
+        [Required(ErrorMessage = "Please provide name")]
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Please provide customer's email")]
+        [Required(ErrorMessage = "Please provide email")]
         [StringLength(255)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Please provide customer's password")]
+        [Required(ErrorMessage = "Please provide password")]
         [StringLength(255)]
         [MinLength(5)]
         [Display(Name = "Password")]
@@ -42,13 +42,6 @@ namespace LibApp.ViewModels
 
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
 
-        public string Title
-        {
-            get
-            {
-                return Id != 0 ? "Edit Customer" : "New Customer";
-            }
-        }
 
         public CustomerFormViewModel()
         {
