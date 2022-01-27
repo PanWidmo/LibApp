@@ -1,13 +1,19 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Authorization
+
+@inject IAuthorizationService authorizationService
+
+@{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
-<a class="btn btn-primary" asp-action="Edit" asp-route-id="@Url.ActionContext.RouteData.Values["id"]">Edit</a>
+@if((await authorizationService.AuthorizeAsync(User, "EditBook")).Succeeded)
+    {
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Url.ActionContext.RouteData.Values["id"]">Edit</a>
+    }
 
 <ul id="bookDetails">
-
 </ul>
 
 

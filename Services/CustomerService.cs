@@ -3,6 +3,7 @@ using LibApp.Data;
 using LibApp.Dtos;
 using LibApp.Exceptions;
 using LibApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,13 @@ namespace LibApp.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly IPasswordHasher<Customer> passwordHasher;
 
-        public CustomerService(ApplicationDbContext context, IMapper mapper)
+        public CustomerService(ApplicationDbContext context, IMapper mapper, IPasswordHasher<Customer> passwordHasher)
         {
             this.context = context;
             this.mapper = mapper;
+            this.passwordHasher = passwordHasher;
         }
 
         public IEnumerable<Customer> GetAllCustomers()
@@ -65,6 +68,9 @@ namespace LibApp.Services
                 Birthdate = createCustomerDto.Birthdate,
                 RoleTypeId = createCustomerDto.RoleTypeId
             };
+
+            var hashedPassword = passwordHasher.HashPassword(newCustomer, createCustomerDto.PasswordHash);
+            newCustomer.PasswordHash = hashedPassword;
 
             context.Customers.Add(newCustomer);
             context.SaveChanges();

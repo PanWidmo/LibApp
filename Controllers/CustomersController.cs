@@ -7,39 +7,36 @@ using LibApp.Models;
 using LibApp.ViewModels;
 using LibApp.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibApp.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public CustomersController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
+        [Authorize(Roles = "User, StoreManager, Owner")]
         public ViewResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Owner")]
         public ViewResult New()
         {
             return View();
         }
 
+        [Authorize(Roles = "Owner")]
         public ViewResult Details()
         {
             return View();
         }
 
+        [Authorize(Roles = "Owner")]
         public ViewResult Edit()
         {
 
             return View();
         }
-
 
     }
 }

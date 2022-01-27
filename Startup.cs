@@ -59,7 +59,12 @@ namespace LibApp
                     };
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("EditBook",
+                    policy => policy.RequireClaim("Role", "StoreManager, Owner"));
+                
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
