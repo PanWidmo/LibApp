@@ -127,7 +127,7 @@ namespace LibApp.Models
                     new RoleType
                     {
                         Id= 3,
-                        Name = "Admin"
+                        Name = "Owner"
                     }
                     );
                 }

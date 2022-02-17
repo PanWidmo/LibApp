@@ -31,48 +31,45 @@
 
 @section Scripts
 {
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            url: "/api/roletypes",
-            method: "GET",
-            success: function (data) {
-                $.each(data, function (i, role) {
-                    $("#RoleTypeId").append(
-                        $('<option></option>').val(role.id).html(role.name));
-                });
-            }
-        })
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        $("#register").click(function (e) {
-
-            var obj = JSON.stringify({
-                email: $("#Email").val(),
-                password: $("#PasswordHash").val(),
-            });
-
-            if ($("#form").valid() == true) {
-                $.ajax({
-                    url: "/api/accounts/login",
-                    method: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: obj,
-                    success: function () {
-                        window.location.href = "/Customers";
-                    }
-                });
-
-                e.preventDefault();
-            }
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/api/roletypes",
+                method: "GET",
+                success: function (data) {
+                    $.each(data, function (i, role) {
+                        $("#RoleTypeId").append(
+                            $('<option></option>').val(role.id).html(role.name));
+                    });
+                }
+            })
         });
-    })
-</script>
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#register").click(function (e) {
+                var obj = JSON.stringify({
+                    email: $("#Email").val(),
+                    password: $("#PasswordHash").val(),
+                });
+                if ($("#form").valid() == true) {
+                    $.ajax({
+                        url: "/api/accounts/login",
+                        method: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: obj,
+                        success: function () {
+                            window.location.href = "/Customers";
+                        }
+                    });
+                    e.preventDefault();
+                }
+            });
+        })
+    </script>
 }
