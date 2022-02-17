@@ -33,6 +33,7 @@ namespace LibApp.Controllers.Api
 
         // GET /api/customers
         [HttpGet]
+        [Authorize(Roles = "User, StoreManager, Owner")]
         public IActionResult GetAllCustomers()
         {
             var result = customerService.GetAllCustomers();
@@ -42,6 +43,7 @@ namespace LibApp.Controllers.Api
 
         // GET /api/customers/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "StoreManager, Owner")]
         public IActionResult GetCustomerById(int id)
         {
             var result = customerService.GetCustomerById(id);
@@ -51,6 +53,7 @@ namespace LibApp.Controllers.Api
 
         // POST /api/customers
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public IActionResult CreateNewCustomer(CustomerUpdateCreateDto createCustomerDto)
         {
             var result = customerService.CreateNewCustomer(createCustomerDto);
@@ -60,6 +63,7 @@ namespace LibApp.Controllers.Api
 
         // PUT /api/customers 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Owner")]
         public IActionResult UpdateCustomer(int id, CustomerUpdateCreateDto updateCustomerDto)
         {
             customerService.UpdateCustomer(id, updateCustomerDto);
@@ -69,6 +73,7 @@ namespace LibApp.Controllers.Api
 
         // DELETE /api/customers
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Owner")]
         public IActionResult DeleteCustomer(int id)
         {
             customerService.DeleteCustomer(id);
