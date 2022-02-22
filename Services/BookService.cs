@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using LibApp.Data;
 using LibApp.Exceptions;
-using LibApp.Models;
+using LibApp.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using LibApp.Models;
 
 namespace LibApp.Services
 {

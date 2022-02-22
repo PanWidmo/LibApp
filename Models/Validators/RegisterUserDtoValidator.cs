@@ -1,10 +1,7 @@
 ﻿using FluentValidation;
 using LibApp.Data;
 using LibApp.Dtos;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LibApp.Models.Validators
 {
