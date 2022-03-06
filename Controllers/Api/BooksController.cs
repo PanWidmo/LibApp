@@ -24,7 +24,7 @@ namespace LibApp.Controllers.Api
 
         //GET /api/books
         [HttpGet]
-        [Authorize(Roles = "User, StoreManager, Owner")]
+        /*[Authorize(Roles = "User, StoreManager, Owner")]*/
         public IActionResult GetAllBooks()
         {
             var result = bookService.GetAllBooks();
@@ -34,7 +34,7 @@ namespace LibApp.Controllers.Api
 
         //GET /api/books/{id}
         [HttpGet("{id}")]
-        [Authorize(Roles = "User, StoreManager, Owner")]
+        /*[Authorize(Roles = "User, StoreManager, Owner")]*/
         public IActionResult GetBookById(int id)
         {
             var result = bookService.GetBookById(id);
@@ -44,7 +44,7 @@ namespace LibApp.Controllers.Api
 
         //POST /api/books
         [HttpPost]
-        [Authorize(Roles = "StoreManager, Owner")]
+        /*[Authorize(Roles = "StoreManager, Owner")]*/
         public IActionResult CreateNewBook(BookUpdateCreateDto createBookDto)
         {
             var result = bookService.CreateNewBook(createBookDto);
@@ -54,7 +54,7 @@ namespace LibApp.Controllers.Api
 
         //PUT /api/books
         [HttpPut("{id}")]
-        [Authorize(Roles = "StoreManager, Owner")]
+        /*[Authorize(Roles = "StoreManager, Owner")]*/
         public IActionResult UpdateBook(int id, BookUpdateCreateDto updateBookDto)
         {
             bookService.UpdateBook(id, updateBookDto);
@@ -64,7 +64,7 @@ namespace LibApp.Controllers.Api
 
         //DELETE /api/books
         [HttpDelete("{id}")]
-        [Authorize(Roles = "StoreManager, Owner")]
+        /*[Authorize(Roles = "StoreManager, Owner")]*/
         public IActionResult DeleteBook(int id)
         {
             bookService.DeleteBook(id);

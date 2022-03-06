@@ -5,25 +5,25 @@ namespace LibApp.Controllers
 {
     public class CustomersController : Controller
     {
-        [Authorize(Roles = "User, StoreManager, Owner")]
+        /*[Authorize(Roles = "User, StoreManager, Owner")]*/
         public ViewResult Index()
         {
             return View();
         }
 
-        [Authorize(Roles = "Owner")]
+        /*[Authorize(Roles = "Owner")]*/
         public ViewResult New()
         {
             return View();
         }
 
-        [Authorize(Roles = "Owner")]
+        /*[Authorize(Roles = "Owner")]*/
         public ViewResult Details()
         {
             return View();
         }
 
-        [Authorize(Roles = "Owner")]
+        /*[Authorize(Roles = "Owner")]*/
         public ViewResult Edit()
         {
 
